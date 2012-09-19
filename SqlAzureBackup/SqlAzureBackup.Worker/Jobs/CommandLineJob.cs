@@ -9,6 +9,8 @@ namespace SqlAzureBackup.Worker.Jobs.Interfaces
         public string TraceInfoMessage { get; set; }
         public string Arguments { get; set; }
 
+        public IJobContext Context { get; set; }
+
         public CommandLineJob()
         {
             this.TraceInfoMessage = "Starting Job";

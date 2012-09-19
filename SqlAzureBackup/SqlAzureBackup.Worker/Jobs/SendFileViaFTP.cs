@@ -9,16 +9,26 @@ namespace SqlAzureBackup.Worker.Jobs
 {
     public class SendFileViaFTP : IJob
     {
+        public IJobContext Context { get; set; }
+
         public void Run()
         {
             Trace.WriteLine("Sending file via FTP..", "Info");
 
-            string blobName = string.Format("backup-{0}.bacpac", DateTime.Now.ToString("MM-dd-yyyy"));
+            // get blob name from context
+            string blobName = (this.Context as SqlAzureBackupJobContext).BacpacBlobName;
+
+            if (blobName == string.Empty)
+            {
+                Trace.WriteLine("No blob name was created", "Error");
+                return;
+            }
+
             var blob = AzureHelper.GetByteBlob(AzureHelper.StorageConnectionString, AzureHelper.BackupContainerName, blobName);
 
             if (blob == null)
             {
-                Trace.WriteLine("The blob does not exist!", "Info");
+                Trace.WriteLine("The blob does not exist!", "Error");
                 return;
             }
 

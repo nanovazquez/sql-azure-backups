@@ -16,8 +16,8 @@ namespace SqlAzureBackup.Worker.Jobs
             this.ProcessName = "DacIESvcCli.exe";
             this.Arguments = string.Empty;
             this.TraceInfoMessage = string.Format("Starting backup process of {0}", DateTime.Now.ToString("MM-dd-yyyy"));
-            string bacpacBlobUri = string.Format("{0}/{1}/backup-{2}.bacpac", AzureHelper.BlobUrl, AzureHelper.BackupContainerName,
-                                                  DateTime.Now.ToString("MM-dd-yyyy"));
+            string bacpacBlobName = string.Format("backup-{0}.bacpac", DateTime.Now.ToString("MM-dd-yyyy"));
+            string bacpacBlobUri = string.Format("{0}/{1}/{2}", AzureHelper.BlobUrl, AzureHelper.BackupContainerName, bacpacBlobName);
 
             // server arguments
             this.Arguments += string.Format(" -s {0} ", AzureHelper.ServerName);
@@ -35,6 +35,11 @@ namespace SqlAzureBackup.Worker.Jobs
 
             // create Azure container 
             AzureHelper.CreateContainerIfNotExist(AzureHelper.StorageConnectionString, AzureHelper.BackupContainerName);
+
+            // store the blob uri and blob name in the context
+            SqlAzureBackupJobContext context = this.Context as SqlAzureBackupJobContext;
+            context.BacpacBlobUri = bacpacBlobUri;
+            context.BacpacBlobName = bacpacBlobName;
         }
     }
 }

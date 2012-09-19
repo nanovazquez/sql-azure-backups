@@ -52,10 +52,13 @@
   <ItemGroup>
     <Compile Include="AzureHelper.cs" />
     <Compile Include="Jobs\CheckLastBackupStatusJob.cs" />
+    <Compile Include="Jobs\AzureBackupContext.cs" />
+    <Compile Include="Jobs\Interfaces\IJobContext.cs" />
     <Compile Include="Jobs\SendFileViaFTP.cs" />
     <Compile Include="Jobs\ExportBacpacJob.cs" />
     <Compile Include="Jobs\CommandLineJob.cs" />
     <Compile Include="Jobs\Interfaces\IJob.cs" />
+    <Compile Include="Jobs\SqlAzureBackupJobContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Jobs\JobScheduler.cs" />
     <Compile Include="WorkerRole.cs" />

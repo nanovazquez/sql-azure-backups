@@ -17,17 +17,19 @@ namespace SqlAzureBackup.Worker.Scheduler
         public DateTime NextExecutionTime { get; set; }
 
         private List<IJob> Jobs { get; set; }
-
+        private SqlAzureBackupJobContext JobContext { get; set; }
 
         public JobScheduler(TimeSpan? frequency = null)
         {
             this.Jobs = new List<IJob>();
+            this.JobContext = new SqlAzureBackupJobContext();
             this.Frequency = (frequency.HasValue) ? frequency.Value : TimeSpan.FromHours(24);
             this.NextExecutionTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, AzureHelper.BackupExecutionHour, 0, 0);
         }
 
         public void AddJob(IJob job)
         {
+            job.Context = this.JobContext;
             this.Jobs.Add(job);
         }
 
