@@ -1,0 +1,15 @@
+﻿VERSION 1.1.0
+*************
+
+Added this change text file.
+-DROP no longer accepts an argument for the database to drop.  You must specify -d to indicate the database.  This is to be consistent with actions that all require -d for setting the database.
+
+EXTRACT added as an option to extract only the schema from a database.  Uses the DAC Extract operation.
+	Extract is used to pull only the schema from the database, no data is put into the target file.
+
+DEPLOY added as an option to deploy only the schema.  Uses the DAC Deploy operation.
+	Deploy is used to push only schema to a server, no data is loaded into the target database.
+
+Added the date and time to the events being logged on the console. 
+Added a ReadKey if an unhandled exception occurs to make it easier to see the error message and stack.
+

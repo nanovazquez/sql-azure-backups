@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="SqlAzureBackup" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2012-05.1.7">
+  <WorkerRole name="SqlAzureBackup.Worker" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" />
+      <Setting name="serverName" />
+      <Setting name="databaseName" />
+      <Setting name="sqlAzureUsername" />
+      <Setting name="sqlAzurePassword" />
+      <Setting name="blobUrl" />
+      <Setting name="blobAccessKey" />
+      <Setting name="backupContainer" />
+      <Setting name="backupExecutionHour" />
+      <Setting name="backupFrequencyInHours" />
+      <Setting name="ftpServerUrl" />
+      <Setting name="ftpServerUsername" />
+      <Setting name="ftpServerPassword" />
+    </ConfigurationSettings>
+  </WorkerRole>
+</ServiceDefinition>

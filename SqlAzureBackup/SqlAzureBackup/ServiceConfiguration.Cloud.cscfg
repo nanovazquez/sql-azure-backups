@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="SqlAzureBackup" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*" schemaVersion="2012-05.1.7">
+  <Role name="SqlAzureBackup.Worker">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="serverName" value="" />
+      <Setting name="databaseName" value="" />
+      <Setting name="sqlAzureUsername" value="" />
+      <Setting name="sqlAzurePassword" value="" />
+      <Setting name="blobUrl" value="" />
+      <Setting name="blobAccessKey" value="" />
+      <Setting name="backupContainer" value="" />
+      <Setting name="backupExecutionHour" value="23" />
+      <Setting name="backupFrequencyInHours" value="24" />
+      <Setting name="ftpServerUrl" value="" />
+      <Setting name="ftpServerUsername" value="" />
+      <Setting name="ftpServerPassword" value="" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

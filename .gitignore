@@ -4,6 +4,7 @@ obj
 *.user
 *.sensitive
 *.suo
+*.build.*
 
 # mstest test results
 TestResults
