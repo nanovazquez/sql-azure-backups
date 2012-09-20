@@ -41,7 +41,9 @@ namespace SqlAzureBackup.Worker
 
             Trace.WriteLine("Setting up jobs");
             
-            var jobScheduler = new JobScheduler(new TimeSpan(Int32.Parse(RoleEnvironment.GetConfigurationSettingValue("backupFrequencyInHours")), 0, 0));
+            var jobScheduler = new JobScheduler(new SqlAzureBackupJobContext(), 
+                                                frequency: new TimeSpan(AzureHelper.BackupFrequencyInHours, 0, 0),
+                                                nextExecutionTime: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, AzureHelper.BackupExecutionHour, 0, 0));
             jobScheduler.AddJob(new ExportBacpacJob());
             jobScheduler.AddJob(new CheckLastBackupStatusJob());
             jobScheduler.AddJob(new SendFileViaFTP());

@@ -17,14 +17,14 @@ namespace SqlAzureBackup.Worker.Scheduler
         public DateTime NextExecutionTime { get; set; }
 
         private List<IJob> Jobs { get; set; }
-        private SqlAzureBackupJobContext JobContext { get; set; }
+        private IJobContext JobContext { get; set; }
 
-        public JobScheduler(TimeSpan? frequency = null)
+        public JobScheduler(IJobContext context, TimeSpan? frequency = null, DateTime? nextExecutionTime = null)
         {
             this.Jobs = new List<IJob>();
-            this.JobContext = new SqlAzureBackupJobContext();
+            this.JobContext = context;
             this.Frequency = (frequency.HasValue) ? frequency.Value : TimeSpan.FromHours(24);
-            this.NextExecutionTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, AzureHelper.BackupExecutionHour, 0, 0);
+            this.NextExecutionTime = (nextExecutionTime.HasValue) ? nextExecutionTime.Value : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 3, 0, 0);
         }
 
         public void AddJob(IJob job)
@@ -65,7 +65,6 @@ namespace SqlAzureBackup.Worker.Scheduler
                 this.Jobs.Select(job => new Task(() => { job.Run(); }))
                          .ToList()
                          .ForEach((Task task) => { task.RunSynchronously(); });
-
             });
         }
     }
