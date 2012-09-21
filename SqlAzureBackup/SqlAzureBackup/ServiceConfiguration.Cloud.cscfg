@@ -3,9 +3,10 @@
   <Role name="SqlAzureBackup.Worker">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="StorageConnectionString" value="" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="serverName" value="" />
+      <Setting name="datacenterName" value="" />
+	  <Setting name="serverName" value="" />
       <Setting name="databaseName" value="" />
       <Setting name="sqlAzureUsername" value="" />
       <Setting name="sqlAzurePassword" value="" />
@@ -16,7 +17,7 @@
       <Setting name="backupFrequencyInHours" value="24" />
       <Setting name="ftpServerUrl" value="" />
       <Setting name="ftpServerUsername" value="" />
-      <Setting name="ftpServerPassword" value="" />
+      <Setting name="ftpServerPassword"value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

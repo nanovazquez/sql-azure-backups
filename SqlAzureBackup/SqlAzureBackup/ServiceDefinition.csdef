@@ -18,6 +18,7 @@
       <Setting name="ftpServerUrl" />
       <Setting name="ftpServerUsername" />
       <Setting name="ftpServerPassword" />
+      <Setting name="datacenterName" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>
