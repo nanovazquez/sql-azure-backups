@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SqlAzureBackup.Worker.Jobs.Interfaces;
-using System.Threading.Tasks;
-using SqlAzureBackup.Worker.Jobs;
-using System.ComponentModel;
-using Microsoft.WindowsAzure.ServiceRuntime;
-using System.Diagnostics;
-
-namespace SqlAzureBackup.Worker.Scheduler
+﻿namespace SqlAzureBackup.Worker.Jobs
 {
-    public class JobScheduler
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Dynamic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    public class JobScheduler<T> where T : IJobContext
     {
         public TimeSpan Frequency { get; set; }
         public DateTime NextExecutionTime { get; set; }
 
-        private List<IJob> Jobs { get; set; }
-        private IJobContext JobContext { get; set; }
+        private T JobContext { get; set; }
+        private List<IJob<T>> Jobs { get; set; }
 
-        public JobScheduler(IJobContext context, TimeSpan? frequency = null, DateTime? nextExecutionTime = null)
+        public JobScheduler(T jobContext, TimeSpan? frequency = null, DateTime? nextExecutionTime = null)
         {
-            this.Jobs = new List<IJob>();
-            this.JobContext = context;
+            this.JobContext = jobContext;
+            this.Jobs = new List<IJob<T>>();
             this.Frequency = (frequency.HasValue) ? frequency.Value : TimeSpan.FromHours(24);
             this.NextExecutionTime = (nextExecutionTime.HasValue) ? nextExecutionTime.Value : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 3, 0, 0);
         }
 
-        public void AddJob(IJob job)
+        public void AddJob(IJob<T> job)
         {
             job.Context = this.JobContext;
             this.Jobs.Add(job);

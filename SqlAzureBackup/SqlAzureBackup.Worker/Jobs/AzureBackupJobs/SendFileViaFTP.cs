@@ -1,26 +1,32 @@
-﻿using System.Diagnostics;
-using Microsoft.WindowsAzure.ServiceRuntime;
-using SqlAzureBackup.Worker.Jobs.Interfaces;
-using System;
-using System.Text;
-using System.Net;
-
-namespace SqlAzureBackup.Worker.Jobs
+﻿namespace SqlAzureBackup.Worker.Jobs.AzureBackupJobs
 {
-    public class SendFileViaFTP : IJob
+    using System.Diagnostics;
+    using Microsoft.WindowsAzure.ServiceRuntime;
+    using System;
+    using System.Text;
+    using System.Net;
+    using System.Dynamic;
+ 
+    public class SendFileViaFTP : IJob<SqlAzureBackupJobContext>
     {
-        public IJobContext Context { get; set; }
+        public SqlAzureBackupJobContext Context { get; set; }
 
         public void Run()
         {
             Trace.WriteLine("Sending file via FTP..", "Info");
 
-            // get blob name from context
-            string blobName = (this.Context as SqlAzureBackupJobContext).BacpacBlobName;
-
-            if (blobName == string.Empty)
+            if (this.Context.BackupStatus != OperationStatus.Success)
             {
-                Trace.WriteLine("No blob name was created", "Error");
+                Trace.WriteLine("There backup status is not successfull", "Error");
+                return;
+            }
+
+            // get blob name from context
+            string blobName = this.Context.BacpacBlobName;
+
+            if (string.IsNullOrEmpty(blobName))
+            {
+                Trace.WriteLine("There's no blobName stored", "Error");
                 return;
             }
 
@@ -56,12 +62,12 @@ namespace SqlAzureBackup.Worker.Jobs
                         bytesSent += bytesToWrite;
                     }
 
-                    Trace.WriteLine("Completed", "Info");
+                    Trace.WriteLine("Job completed", "Info");
                 }
             }
             catch (Exception e)
             {
-                Trace.WriteLine(string.Format("Error!\n {0}", e.Message), "Error");
+                Trace.WriteLine(e.Message, "Error");
             }
         }
     }

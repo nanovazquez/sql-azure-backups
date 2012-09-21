@@ -12,6 +12,7 @@ namespace SqlAzureBackup.Worker
     {
         public static string StorageConnectionString = RoleEnvironment.GetConfigurationSettingValue("StorageConnectionString");
         public static string ServerName = RoleEnvironment.GetConfigurationSettingValue("serverName");
+        public static string DatacenterName = RoleEnvironment.GetConfigurationSettingValue("datacenterName");
         public static string DatabaseName = RoleEnvironment.GetConfigurationSettingValue("databaseName");
         public static string SqlAzureUsername = RoleEnvironment.GetConfigurationSettingValue("sqlAzureUsername");
         public static string SqlAzurePassword = RoleEnvironment.GetConfigurationSettingValue("sqlAzurePassword");
