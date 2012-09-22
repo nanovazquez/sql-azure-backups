@@ -9,18 +9,21 @@
 
     public class JobScheduler<T> where T : IJobContext
     {
+        public string Name { get; set; }
+
         public TimeSpan Frequency { get; set; }
         public DateTime NextExecutionTime { get; set; }
 
         private T JobContext { get; set; }
         private List<IJob<T>> Jobs { get; set; }
 
-        public JobScheduler(T jobContext, TimeSpan? frequency = null, DateTime? nextExecutionTime = null)
+        public JobScheduler(string blobNextExecutionTimeName, T jobContext, TimeSpan? frequency = null, DateTime? nextExecutionTime = null)
         {
+            this.Name = (!string.IsNullOrEmpty(blobNextExecutionTimeName)) ? blobNextExecutionTimeName : string.Format("job-scheduler/next-execution-time-{0}.txt", Guid.NewGuid().ToString());
             this.JobContext = jobContext;
             this.Jobs = new List<IJob<T>>();
             this.Frequency = (frequency.HasValue) ? frequency.Value : TimeSpan.FromHours(24);
-            this.NextExecutionTime = (nextExecutionTime.HasValue) ? nextExecutionTime.Value : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 3, 0, 0);
+            this.NextExecutionTime = this.GetNextExecutionTime();
         }
 
         public void AddJob(IJob<T> job)
@@ -44,6 +47,7 @@
                 Trace.WriteLine(string.Format("Executing Jobs on {0}", currentTime.ToShortDateString()));
                 this.ExecuteJobs();
                 this.NextExecutionTime = this.NextExecutionTime.AddHours(this.Frequency.TotalHours);
+                this.SaveNextExecutionTime(this.NextExecutionTime);
             }
 
             return haveToExecuteJobs;
@@ -62,6 +66,32 @@
                          .ToList()
                          .ForEach((Task task) => { task.RunSynchronously(); });
             });
+        }
+
+        private DateTime GetNextExecutionTime()
+        {
+            DateTime toReturn = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, AzureHelper.BackupExecutionHour, 0, 0);
+            string containerName = this.Name.Contains('/') ? this.Name.Substring(0, this.Name.IndexOf('/')) : string.Empty;
+            string blobName = this.Name.Contains('/') ? this.Name.Substring(this.Name.IndexOf('/') + 1) : this.Name;
+            string dateString = AzureHelper.GetTextBlob(AzureHelper.StorageConnectionString, containerName, blobName);
+
+            if (string.IsNullOrEmpty(dateString))
+            {
+                this.SaveNextExecutionTime(toReturn);
+            }
+            else
+            {
+                toReturn = DateTime.Parse(dateString);
+            }
+
+            return toReturn;
+        }
+
+        private void SaveNextExecutionTime(DateTime executionTime)
+        {
+            string containerName = this.Name.Contains('/') ? this.Name.Substring(0, this.Name.IndexOf('/')) : string.Empty;
+            string blobName = this.Name.Contains('/') ? this.Name.Substring(this.Name.IndexOf('/') + 1) : this.Name;
+            AzureHelper.SaveTextToBlob(AzureHelper.StorageConnectionString, containerName, blobName, executionTime.ToString("MM/dd/yyyy HH:mm"));
         }
     }
 }

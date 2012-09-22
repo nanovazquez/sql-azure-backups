@@ -38,14 +38,14 @@ namespace SqlAzureBackup.Worker
             Trace.WriteLine("Setting up jobs", "Info");
 
             var jobScheduler = new JobScheduler<SqlAzureBackupJobContext>(
+                                                blobNextExecutionTimeName: "sql-azure-backups/azure-backup-next-execution-time.txt",
                                                 jobContext: new SqlAzureBackupJobContext(),
-                                                frequency: new TimeSpan(AzureHelper.BackupFrequencyInHours, 0, 0),
-                                                nextExecutionTime: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, AzureHelper.BackupExecutionHour, 0, 0));
+                                                frequency: new TimeSpan(AzureHelper.BackupFrequencyInHours, 0, 0));
             
-            jobScheduler.AddJob(new ResolveDatacenterJob());
-            jobScheduler.AddJob(new ExportBacpacJob());
-            jobScheduler.AddJob(new CheckBacpacStatusJob());
-            jobScheduler.AddJob(new SendFileViaFTP());
+            //jobScheduler.AddJob(new ResolveDatacenterJob());
+            //jobScheduler.AddJob(new ExportBacpacJob());
+            //jobScheduler.AddJob(new CheckBacpacStatusJob());
+            //jobScheduler.AddJob(new SendFileViaFTP());
 
             Trace.WriteLine("Starting the WorkerRole loop", "Info");
             while (true)
