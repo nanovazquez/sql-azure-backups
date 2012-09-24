@@ -6,6 +6,7 @@ csx
 *.sensitive
 *.suo
 *.build.*
+sensitive
 
 # mstest test results
 TestResults
