@@ -1,12 +1,9 @@
 ﻿namespace SqlAzureBackup.Worker.Jobs.AzureBackupJobs
 {
-    using System.Diagnostics;
-    using Microsoft.WindowsAzure.ServiceRuntime;
     using System;
-    using System.Text;
+    using System.Diagnostics;
     using System.Net;
-    using System.Dynamic;
- 
+
     public class SendFileViaFTP : IJob<SqlAzureBackupJobContext>
     {
         public SqlAzureBackupJobContext Context { get; set; }

@@ -2,13 +2,10 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Dynamic;
+    using System.IO;
     using System.Net;
-    using Microsoft.WindowsAzure.ServiceRuntime;
-    using Microsoft.WindowsAzure;
     using System.Xml;
     using System.Xml.Linq;
-    using System.IO;
 
     public class ExportBacpacJob : IJob<SqlAzureBackupJobContext>
     {

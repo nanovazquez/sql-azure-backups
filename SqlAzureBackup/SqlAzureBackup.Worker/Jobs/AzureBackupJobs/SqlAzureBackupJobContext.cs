@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SqlAzureBackup.Worker.Jobs.AzureBackupJobs
+﻿namespace SqlAzureBackup.Worker.Jobs.AzureBackupJobs
 {
     public enum OperationStatus { Failed, Success };
 

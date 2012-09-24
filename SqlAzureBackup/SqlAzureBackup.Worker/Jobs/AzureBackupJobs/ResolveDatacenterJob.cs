@@ -1,7 +1,6 @@
 ﻿namespace SqlAzureBackup.Worker.Jobs.AzureBackupJobs
 {
     using System.Diagnostics;
-    using System.Dynamic;
 
     public class ResolveDatacenterJob : IJob<SqlAzureBackupJobContext>
     {

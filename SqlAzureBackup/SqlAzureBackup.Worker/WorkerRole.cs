@@ -2,7 +2,6 @@ namespace SqlAzureBackup.Worker
 {
     using System;
     using System.Diagnostics;
-    using System.Dynamic;
     using System.Net;
     using System.Threading;
     using Microsoft.WindowsAzure.Diagnostics;

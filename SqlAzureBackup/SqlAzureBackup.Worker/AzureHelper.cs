@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
-using Microsoft.WindowsAzure.ServiceRuntime;
-
-namespace SqlAzureBackup.Worker
+﻿namespace SqlAzureBackup.Worker
 {
+    using System;
+    using Microsoft.WindowsAzure;
+    using Microsoft.WindowsAzure.ServiceRuntime;
+    using Microsoft.WindowsAzure.StorageClient;
+
     public static class AzureHelper
     {
         public static string StorageConnectionString = RoleEnvironment.GetConfigurationSettingValue("StorageConnectionString");

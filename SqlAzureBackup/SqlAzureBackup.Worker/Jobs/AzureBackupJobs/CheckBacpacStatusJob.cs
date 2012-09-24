@@ -2,15 +2,11 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Dynamic;
     using System.IO;
     using System.Linq;
     using System.Net;
     using System.Threading;
     using System.Xml.Linq;
-
-    // sample: 
-    // GET /DACWebService.svc/Status?servername=[server-name]&username=[username]&password=[password]&reqid=[request-id]
 
     public class CheckBacpacStatusJob : IJob<SqlAzureBackupJobContext>
     {
