@@ -41,11 +41,11 @@ namespace SqlAzureBackup.Worker
                                                 blobNextExecutionTimeName: "sql-azure-backups/azure-backup-next-execution-time.txt",
                                                 jobContext: new SqlAzureBackupJobContext(),
                                                 frequency: new TimeSpan(AzureHelper.BackupFrequencyInHours, 0, 0));
-            
-            //jobScheduler.AddJob(new ResolveDatacenterJob());
-            //jobScheduler.AddJob(new ExportBacpacJob());
-            //jobScheduler.AddJob(new CheckBacpacStatusJob());
-            //jobScheduler.AddJob(new SendFileViaFTP());
+
+            jobScheduler.AddJob(new ResolveDatacenterJob());
+            jobScheduler.AddJob(new ExportBacpacJob());
+            jobScheduler.AddJob(new CheckBacpacStatusJob());
+            jobScheduler.AddJob(new SendFileViaFTP());
 
             Trace.WriteLine("Starting the WorkerRole loop", "Info");
             while (true)

@@ -27,7 +27,7 @@
             }
 
             // create container if not exist
-            AzureHelper.CreateContainerIfNotExist(AzureHelper.StorageConnectionString, AzureHelper.BackupContainerName);
+            AzureHelper.GetContainer(AzureHelper.StorageConnectionString, AzureHelper.BackupContainerName);
 
             // send the export request
             try

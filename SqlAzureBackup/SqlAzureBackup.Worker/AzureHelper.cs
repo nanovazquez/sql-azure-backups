@@ -25,7 +25,7 @@ namespace SqlAzureBackup.Worker
         public static string FtpServerUsername = RoleEnvironment.GetConfigurationSettingValue("ftpServerUsername");
         public static string FtpServerPassword = RoleEnvironment.GetConfigurationSettingValue("ftpServerPassword");
 
-        public static bool CreateContainerIfNotExist(string connectionString, string containerName)
+        public static CloudBlobContainer GetContainer(string connectionString, string containerName)
         {
             // Retrieve storage account from connection string
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
@@ -44,20 +44,6 @@ namespace SqlAzureBackup.Worker
             {
                 container.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Container });
             }
-
-            return isNewContainer;
-        }
-
-        public static CloudBlobContainer GetContainer(string connectionString, string containerName)
-        {
-            // Retrieve storage account from connection string
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
-
-            // Create the blob client 
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            // Retrieve a reference to a container 
-            CloudBlobContainer container = blobClient.GetContainerReference(containerName);
 
             return container;
         }
