@@ -17,7 +17,7 @@
       <Setting name="backupFrequencyInHours" value="24" />
       <Setting name="ftpServerUrl" value="" />
       <Setting name="ftpServerUsername" value="" />
-      <Setting name="ftpServerPassword"value="" />
+      <Setting name="ftpServerPassword" value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

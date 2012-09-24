@@ -6,6 +6,7 @@
     using System.Dynamic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Globalization;
 
     public class JobScheduler<T> where T : IJobContext
     {
@@ -81,7 +82,7 @@
             }
             else
             {
-                toReturn = DateTime.Parse(dateString);
+                toReturn = DateTime.Parse(dateString, CultureInfo.CreateSpecificCulture("en-US"));
             }
 
             return toReturn;
