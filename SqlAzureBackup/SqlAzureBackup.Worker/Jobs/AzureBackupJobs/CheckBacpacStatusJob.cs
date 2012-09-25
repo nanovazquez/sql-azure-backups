@@ -54,15 +54,14 @@
                             // find the status of the export
                             var xmlDoc = XDocument.Parse(reader.ReadToEnd());
 
+                            string logBlobName = string.Format("log-{0}.txt", this.Context.BacpacBlobName);
                             string status = (from element in xmlDoc.Descendants()
                                              where element.Name.LocalName.ToLower() == "status"
                                              select element.Value.ToLower()).FirstOrDefault();
 
                             if (status == "completed")
-                            {
-                                string logBlobName = string.Format("log-{0}.txt", this.Context.BacpacBlobName);
+                            {   
                                 AzureHelper.SaveTextToBlob(AzureHelper.StorageConnectionString, AzureHelper.BackupContainerName, logBlobName, xmlDoc.ToString());
-
                                 Trace.WriteLine("Export job completed", "Info");
                                 this.Context.BackupStatus = OperationStatus.Success;
                             }
@@ -70,9 +69,10 @@
                             if (status == "failed")
                             {
                                 string errorMessage = (from element in xmlDoc.Descendants()
-                                                       where element.Name.LocalName.ToLower() == "ErrorMessage"
+                                                       where element.Name.LocalName.ToLower() == "errormessage"
                                                        select element.Value).FirstOrDefault();
-                                
+
+                                AzureHelper.SaveTextToBlob(AzureHelper.StorageConnectionString, AzureHelper.BackupContainerName, logBlobName, xmlDoc.ToString());
                                 Trace.WriteLine("Job failed.\n Info: {0}", errorMessage);
                                 this.Context.BackupStatus = OperationStatus.Failed;
                             }
