@@ -11,7 +11,7 @@
     {
         public SqlAzureBackupJobContext Context { get; set; }
 
-        private string bacpacBlobName = string.Format("backup-{0}.bacpac", DateTime.Now.ToString("MM-dd-yyyy"));
+        private string bacpacBlobName = string.Format("backup-{0}.bacpac", DateTime.Now.ToString("MM-dd-yyyy-HH:mm"));
 
         public void Run()
         {

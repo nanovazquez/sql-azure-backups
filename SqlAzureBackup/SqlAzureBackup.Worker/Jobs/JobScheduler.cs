@@ -91,7 +91,7 @@
         {
             string containerName = this.Name.Contains('/') ? this.Name.Substring(0, this.Name.IndexOf('/')) : string.Empty;
             string blobName = this.Name.Contains('/') ? this.Name.Substring(this.Name.IndexOf('/') + 1) : this.Name;
-            AzureHelper.SaveTextToBlob(AzureHelper.StorageConnectionString, containerName, blobName, executionTime.ToString("MM/dd/yyyy HH:mm"));
+            AzureHelper.SaveTextToBlob(AzureHelper.StorageConnectionString, containerName, blobName, executionTime.ToString("MM-dd-yyyy HH:mm"));
         }
     }
 }
