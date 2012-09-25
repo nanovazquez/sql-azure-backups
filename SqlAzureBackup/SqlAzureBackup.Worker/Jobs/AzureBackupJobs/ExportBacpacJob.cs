@@ -11,7 +11,7 @@
     {
         public SqlAzureBackupJobContext Context { get; set; }
 
-        private string bacpacBlobName = string.Format("backup-{0}.bacpac", DateTime.Now.ToString("MM-dd-yyyy-HH:mm"));
+        private string bacpacBlobName = string.Empty;
 
         public void Run()
         {
@@ -22,6 +22,9 @@
                 Trace.WriteLine("The datacenter endpoint value is empty", "Error");
                 return;
             }
+
+            // set up blob name
+            bacpacBlobName = string.Format("backup-{0}.bacpac", DateTime.Now.ToString("MM-dd-yyyy-HH:mm"));
 
             // create container if not exist
             AzureHelper.GetContainer(AzureHelper.StorageConnectionString, AzureHelper.BackupContainerName);

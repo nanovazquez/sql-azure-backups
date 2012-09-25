@@ -50,7 +50,6 @@
                 // Read the file from the server & write to destination                
                 using (var ftpStream = request.GetRequestStream())
                 {
-
                     int bytesSent = 0;
                     while (bytesSent < blob.Length)
                     {
