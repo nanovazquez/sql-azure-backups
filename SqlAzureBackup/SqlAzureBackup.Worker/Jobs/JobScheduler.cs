@@ -44,7 +44,7 @@
 
             if (haveToExecuteJobs)
             {
-                Trace.WriteLine(string.Format("Executing Jobs on {0}", currentTime.ToShortDateString()));
+                Trace.WriteLine(string.Format("Executing Jobs at {0}", currentTime.ToShortDateString()));
                 this.ExecuteJobs();
                 this.NextExecutionTime = this.NextExecutionTime.AddHours(this.Frequency.TotalHours);
                 this.SaveNextExecutionTime(this.NextExecutionTime);
