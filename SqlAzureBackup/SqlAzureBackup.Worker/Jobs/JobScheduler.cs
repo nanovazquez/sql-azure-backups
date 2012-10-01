@@ -40,7 +40,7 @@
         public bool TryExecuteJobs()
         {
             DateTime currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time"));
-            bool haveToExecuteJobs = currentTime > this.NextExecutionTime && currentTime.Subtract(this.NextExecutionTime) > this.Frequency;
+            bool haveToExecuteJobs = currentTime > this.NextExecutionTime;
 
             if (haveToExecuteJobs)
             {
